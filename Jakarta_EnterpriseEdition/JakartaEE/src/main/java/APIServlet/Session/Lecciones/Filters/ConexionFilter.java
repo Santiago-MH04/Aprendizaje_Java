@@ -49,9 +49,9 @@ public class ConexionFilter implements Filter {
                 ((HttpServletResponse)response).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage()); //Enviar cualquier posible error
                 e.printStackTrace();
             }
-        /*} catch (SQLException *//*| NamingException*//* e) {
+        /*} catch (SQLException | NamingException e) {
             e.printStackTrace();
-            *//*e.fillInStackTrace();*//*   //Para probar luego
+            e.fillInStackTrace();   //Para probar luego
         }*/
     }
 }

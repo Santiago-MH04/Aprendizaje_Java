@@ -1,5 +1,6 @@
 package APIServlet.Session.Lecciones.Repositorios;
 
+import APIServlet.Session.Lecciones.Configs.Calificadores.MisLogs;
 import APIServlet.Session.Lecciones.Configs.Calificadores.MySQLConn;
 import APIServlet.Session.Lecciones.Configs.Estereotipos.Repository;
 import APIServlet.Session.Lecciones.Models.Categoria;
@@ -25,6 +26,7 @@ public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
                                 //No es necesario manejar el constructor con una conexión, pues el contenedor gestiona la instancia
                                 // de la conexión
     @Inject //Usar un modificador transient únicamente en los objetos de contexto SessionScoped o ConversationScoped que implementen la interfaz serializable
+    @MisLogs/*@Named("misLogs")*/
     private Logger Log; //Un objeto Logger no se guarda en la sesión (no es serializable)
 
         //Constructores de ProductoRepositorioJDBCImpl

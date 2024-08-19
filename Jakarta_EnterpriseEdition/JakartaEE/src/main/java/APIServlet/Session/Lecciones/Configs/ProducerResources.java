@@ -1,5 +1,6 @@
 package APIServlet.Session.Lecciones.Configs;
 
+import APIServlet.Session.Lecciones.Configs.Calificadores.MisLogs;
 import APIServlet.Session.Lecciones.Configs.Calificadores.MySQLConn;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,11 +19,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-@ApplicationScoped
-//También puede aplicar @Dependent (aunque arroja errores). Así, cuando el bean-discovery-mode esté en annotated, esto va a correr bárbaro
+@ApplicationScoped  //También puede aplicar @Dependent (aunque arroja errores). Así, cuando el bean-discovery-mode esté en annotated, esto va a correr bárbaro
 public class ProducerResources {
         //Atributos de ProducerResources
     @Inject //Usar un modificador transient únicamente en los objetos de contexto SessionScoped o ConversationScoped que implementen la interfaz serializable
+    @MisLogs/*@Named("misLogs")*/
     private Logger Log; //Un objeto Logger no se guarda en la sesión (no es serializable)
     @Resource(name="jdbc/MySQLDB")   //Así, y no con @Inject, dado que es un recurso de Tomcat
     private DataSource ds;
@@ -42,6 +43,7 @@ public class ProducerResources {
         return this.ds.getConnection();
     }
     @Produces
+    @MisLogs/*@Named("misLogs")*/
     private Logger beanLogger(InjectionPoint injectionPoint){   //Así, se obtiene el nombre de cualquier clase que use este método
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());  //Debe llamarse beanLogger en camelCase. Método cuasirrecursivo
     }

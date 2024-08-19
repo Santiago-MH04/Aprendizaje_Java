@@ -11,5 +11,11 @@
         <class>
             APIServlet.Session.Lecciones.Interceptores.TransaccionalInterceptor
         </class>
+        <class>
+            APIServlet.Session.Actividades.Actividad7_Cursos.Interceptores.LoggingActInterceptor
+        </class>
+        <class>
+            APIServlet.Session.Actividades.Actividad7_Cursos.Interceptores.TransaccionalActInterceptor
+        </class>
     </interceptors>
 </beans>

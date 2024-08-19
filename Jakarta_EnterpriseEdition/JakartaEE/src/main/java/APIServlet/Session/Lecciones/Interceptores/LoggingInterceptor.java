@@ -1,5 +1,6 @@
 package APIServlet.Session.Lecciones.Interceptores;
 
+import APIServlet.Session.Lecciones.Configs.Calificadores.MisLogs;
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 public class LoggingInterceptor {
         //Atributos de LoggingInterceptor
     @Inject //Usar un modificador transient únicamente en los objetos de contexto SessionScoped o ConversationScoped que implementen la interfaz serializable
+    @MisLogs/*@Named("misLogs")*/
     private Logger Log; //Un objeto Logger no se guarda en la sesión (no es serializable)
 
     //Constructores de LoggingInterceptor

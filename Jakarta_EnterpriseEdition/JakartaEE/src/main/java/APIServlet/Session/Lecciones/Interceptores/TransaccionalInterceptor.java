@@ -1,5 +1,6 @@
 package APIServlet.Session.Lecciones.Interceptores;
 
+import APIServlet.Session.Lecciones.Configs.Calificadores.MisLogs;
 import APIServlet.Session.Lecciones.Configs.Calificadores.MySQLConn;
 import APIServlet.Session.Lecciones.Service.ServiceJDBCException;
 import jakarta.inject.Inject;
@@ -17,6 +18,7 @@ public class TransaccionalInterceptor {
             //Como es un interceptor de métodos transaccionales,
             // requiere usar una conexión a base de datos, y al log de Tomcat
     @Inject //Usar un modificador transient únicamente en los objetos de contexto SessionScoped o ConversationScoped que implementen la interfaz serializable
+    @MisLogs/*@Named("misLogs")*/
     private Logger Log; //Un objeto Logger no se guarda en la sesión (no es serializable)
     @Inject
     @MySQLConn

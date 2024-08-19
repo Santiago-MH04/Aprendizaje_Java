@@ -1,5 +1,6 @@
 package APIServlet.Session.Lecciones.Models;
 
+import APIServlet.Session.Lecciones.Configs.Calificadores.MisLogs;
 import APIServlet.Session.Lecciones.Configs.Estereotipos.CarritoCompras;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -20,6 +21,7 @@ public class Carrito implements Serializable {
         //Atributos de Carrito
     private List<ItemCarrito> Items;
     @Inject //Usar un modificador transient únicamente en los objetos de contexto SessionScoped o ConversationScoped que implementen la interfaz serializable
+    @MisLogs/*@Named("misLogs")*/
     private transient Logger Log; //Un objeto Logger no se guarda en la sesión (no es serializable), por ende, se guarda con modificador de acceso transient
 
         //Constructores de Carrito
