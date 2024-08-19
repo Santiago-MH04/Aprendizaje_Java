@@ -42,7 +42,7 @@ public class PerfilUsuarioServlet extends HttpServlet {
             out.println("           <ul>");
             out.println("               <li>Nombre de usuario : " + NombreUsuario + "</li>");
             out.println("           </ul>");
-            out.println("           <p><a href=" + req.getContextPath() + "/index.jsp" + ">Volver a inicio</a></p>");
+            out.println("           <p><a href=" + req.getContextPath() + "/index.html" + ">Volver a inicio</a></p>");
             out.println("    </body>");
             out.println("</html>");           //Se cierra porque se abrió
 

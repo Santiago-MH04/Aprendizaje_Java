@@ -3,7 +3,9 @@ package APIServlet.Session.Lecciones.Repositorios;
 import APIServlet.Session.Lecciones.Configs.Calificadores.MySQLConn;
 import APIServlet.Session.Lecciones.Configs.Estereotipos.Repository;
 import APIServlet.Session.Lecciones.Models.Usuario;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,10 +13,10 @@ import java.util.List;
 
 /*@ApplicationScoped*/  //Lo que es único por cada request es una conexión
 @Repository
-public class UsuarioRepositorioJDBCImpl implements UsuarioRepositorio{
+public class UsuarioRepositorioJDBCImpl implements UsuarioRepositorio {
         //Atributos de UsuarioRepositorioJDBCImpl
     @Inject
-    @MySQLConn /*@Named("conn")*/   //Uso de calificadores
+    @MySQLConn/*@Named("conn")*/   //Uso de calificadores
     private Connection Conn;    //Esta conexión implementa el pool de conexiones
                                 //No es necesario manejar el constructor con una conexión, pues el contenedor gestiona la instancia
                                 // de la conexión
@@ -24,17 +26,17 @@ public class UsuarioRepositorioJDBCImpl implements UsuarioRepositorio{
                                             // en caso de que la inyección de dependencias se dé
                                             // por un método diferente a atributos
     }
-        /*public UsuarioRepositorioJDBCImpl(Connection conn) {
-            this.Conn = conn;
-        }*/     //Como el contenedor contiene la instancia de la conexión, este método
-                // se vuelve redundante, y puede generar conflictos
+    /*public UsuarioRepositorioJDBCImpl(Connection conn) {
+        this.Conn = conn;
+    }  */     //Como el contenedor contiene la instancia de la conexión, este método
+            // se vuelve redundante, y puede generar conflictos
 
-        //Asignadores de atributos de UsuarioRepositorioJDBCImpl (setter)
+        //Asignadores de atributos de UsuarioRepositorioJDBCImpl (setters)
     public void setConn(Connection conn) {
         this.Conn = conn;
     }
 
-        //Lectores de atributos de UsuarioRepositorioJDBCImpl (getter)
+        //Lectores de atributos de UsuarioRepositorioJDBCImpl (getters)
     public Connection getConn() {
         return this.Conn;
     }
@@ -64,12 +66,12 @@ public class UsuarioRepositorioJDBCImpl implements UsuarioRepositorio{
         return Usuarios;
     }
     @Override
-    public Usuario PorID(Long ID) throws SQLException {
+    public Usuario PorID(Long id) throws SQLException {
         Usuario Usuariou = null;
             //Obtener la conexión a la base de datos
         try (PreparedStatement PS = this.Conn.prepareStatement("SELECT * FROM usuarios WHERE id = ?")){
                 //Asignar el parámetro a la sentencia
-            PS.setLong(1, ID);
+            PS.setLong(1, id);
                 //Ejecutar la sentencia
             try (ResultSet RS = PS.executeQuery()){
                     //Recorrer el cursor
@@ -114,6 +116,7 @@ public class UsuarioRepositorioJDBCImpl implements UsuarioRepositorio{
             PS.executeUpdate();
         }
     }
+
         //De la interfaz Usuario Repositorio
     @Override
     public Usuario PorUsername(String nombreUsuario) throws SQLException {

@@ -3,7 +3,9 @@ package APIServlet.Session.Lecciones.Controllers;
 import APIServlet.Session.Lecciones.Configs.Calificadores.ProductoServicePrincipal;
 import APIServlet.Session.Lecciones.Models.*;
 import APIServlet.Session.Lecciones.Service.ProductoService;
+import APIServlet.Session.Lecciones.Service.ProductoServiceJDBCImpl;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.Connection;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -21,13 +25,13 @@ import java.util.Optional;
 @WebServlet("/productos/form")
 public class ProductoFormServlet extends HttpServlet {
         //Atributos de ProductoFormServlet
-    @Inject /*@Named("defecto")*/
+    @Inject/*@Named("defecto")*/
     @ProductoServicePrincipal
-    private ProductoService Service;
+    ProductoService Service;
 
     //Constructores de ProductoFormServlet
-    //Asignadores de atributos de ProductoFormServlet (setter)
-    //Lectores de atributos de ProductoFormServlet (getter)
+    //Asignadores de atributos de ProductoFormServlet (setters)
+    //Lectores de atributos de ProductoFormServlet (getters)
         //Métodos de ProductoFormServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +39,9 @@ public class ProductoFormServlet extends HttpServlet {
         /*Connection Conn = (Connection)req.getAttribute("conn");*/
             //Obtener las categorías para el formulario
         /*ProductoService Service = new ProductoServiceJDBCImpl(Conn);*/
+
+            //Listar las categorías y obtener el ID de cada producto, en caso de editar
+        req.setAttribute("categorias", this.Service.ListarCategorias());
 
         Long ID;
         try {
@@ -52,7 +59,7 @@ public class ProductoFormServlet extends HttpServlet {
         }
 
             //Listar las categorías y obtener el ID de cada producto, en caso de editar
-        req.setAttribute("categorias", this.Service.ListarCategoria());
+        req.setAttribute("categorias", this.Service.ListarCategorias());
         req.setAttribute("producto", Prodotto);
         req.setAttribute("titulum", req.getAttribute("titulum") + ": formulario de productos");
             //Redirigir al formulario con la vista
@@ -65,38 +72,32 @@ public class ProductoFormServlet extends HttpServlet {
         /*Connection Conn = (Connection)req.getAttribute("conn");*/
             //Jugar con el Service
         /*ProductoService Service = new ProductoServiceJDBCImpl(Conn);*/
+
             //Obtener los parámetros de un producto
         String Nombre = req.getParameter("nombre");
-
         Long ID;
-        try {
+        try {   //Este manejo de excepciones es atómico
             ID = Long.valueOf(req.getParameter("id"));
         } catch (NumberFormatException e) {
             ID = 0L;
         }
-
         Integer Precio;
         try {   //Este manejo de excepciones es atómico
             Precio = Integer.valueOf(req.getParameter("precio"));
         } catch (NumberFormatException e) {
             Precio = 0;
         }
-
         String SKU = req.getParameter("sku");
-
         String FechaString = null; //HTML 5 siempre envía las fechas en formato AAAA-MM-DD
-        FechaString = req.getParameter("fecha_registro");
-
+            FechaString = req.getParameter("fecha_registro");
         Long CategoríaID;
         try {   //Este manejo de excepciones es atómico
             CategoríaID = Long.valueOf(req.getParameter("categoria"));  //En la vista, el valor del parámetro categoria corresponde a su ID
         } catch (NumberFormatException e) {
             CategoríaID = 0L;
         }
-
             //Guardar los mensajes de error
         Map<String, String> Errores = new HashMap<>();
-
         if (Nombre == null || Nombre.isBlank()){
             Errores.put("nombre", "Se requiere un nombre para el producto");
         }
@@ -142,10 +143,9 @@ public class ProductoFormServlet extends HttpServlet {
         } else {
             req.setAttribute("erroresP", Errores);
                 //Listar las categorías y obtener el ID de cada producto, en caso de editar
-            req.setAttribute("categorias", this.Service.ListarCategoria());
+            req.setAttribute("categorias", this.Service.ListarCategorias());
             req.setAttribute("producto", Prod);
             req.setAttribute("titulum", req.getAttribute("titulum") + ": formulario de productos");
-
                 //Redirigir al formulario con la vista
             getServletContext().getRequestDispatcher("/form.jsp").forward(req, resp);
         }

@@ -1,6 +1,8 @@
 package APIServlet.Session.Lecciones.Controllers;
 
-import APIServlet.Session.Lecciones.Service.*;
+import APIServlet.Session.Lecciones.Service.LoginService;
+import APIServlet.Session.Lecciones.Service.LoginServiceImpl_Session;
+
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,9 +13,9 @@ import java.util.Optional;
 
 @WebServlet({"/logout-session", "/logout-session.html"})
 public class LogoutServlet extends HttpServlet {
-    //Atributos de LogoutServlet
+        //Atributos de LogoutServlet
     @Inject
-    private LoginService SeAutoriza;
+    LoginService SeAutoriza;
 
     //Constructores de LogoutServlet
     //Asignadores de atributos de LogoutServlet (setter)
@@ -25,10 +27,9 @@ public class LogoutServlet extends HttpServlet {
         Optional<String> NombreUsuario = this.SeAutoriza.getUsername(req);
 
         if (NombreUsuario.isPresent()){
-            HttpSession MiSesión = req.getSession();
-            /*MiSesión.removeAttribute("username");*/   //Así, no se elimina la información del carrito de compras hasta no cerrar el navegador
-            MiSesión.invalidate();      //Esto elimina los datos guardados de la sesión, para iniciar nuevamente
+            HttpSession session = req.getSession();
+                session.invalidate();   //Así, hace borrón y cuenta nueva
         }
-        resp.sendRedirect(req.getContextPath() + "/loginSession.jsp");
+        resp.sendRedirect(req.getContextPath() + "/login-session.html");
     }
 }

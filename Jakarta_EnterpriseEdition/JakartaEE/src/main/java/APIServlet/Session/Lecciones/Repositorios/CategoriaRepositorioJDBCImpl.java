@@ -1,33 +1,35 @@
 package APIServlet.Session.Lecciones.Repositorios;
 
-import APIServlet.Session.Lecciones.Configs.Calificadores.*;
-import APIServlet.Session.Lecciones.Configs.Estereotipos.*;
+import APIServlet.Session.Lecciones.Configs.Calificadores.MySQLConn;
+import APIServlet.Session.Lecciones.Configs.Estereotipos.Repository;
 import APIServlet.Session.Lecciones.Models.Categoria;
-import APIServlet.Session.Lecciones.Models.Producto;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/*@ApplicationScoped*/  //Lo que es único por cada request es una conexión
+/*@ApplicationScoped*/ //Lo que es único por cada request es una conexión
 @Repository
 public class CategoriaRepositorioJDBCImpl implements Repositorio<Categoria>{
-        //Atributos de CategoríaRepositorioJDBCImpl
-    private Connection Conn;
+        //Atributos de CategoriaRepositorioJDBCImpl
+    private Connection Conn;    //Esta conexión implementa el pool de conexiones
+                                //No es necesario manejar el constructor con una conexión, pues el contenedor gestiona la instancia
+                                // de la conexión
 
-        //Constructores de CategoríaRepositorioJDBCImpl
-    public CategoriaRepositorioJDBCImpl() {     //Lo dejo nada más por si las moscas
+        //Constructores de CategoriaRepositorioJDBCImpl
+    public CategoriaRepositorioJDBCImpl() { //Lo dejo nada más por si las moscas
     }
     @Inject
-    public CategoriaRepositorioJDBCImpl(@MySQLConn Connection conn) {    /*(@Named("conn") Connection conn)*/ // Uso de calificadores
+    public CategoriaRepositorioJDBCImpl(@MySQLConn Connection conn) {  /*(@Named("conn") Connection conn)*/ // Uso de calificadores
         this.Conn = conn;
-    }  //Hay tres maneras de inyectar dependencias, vía atributos, constructor o método set
+    }
 
-    //Asignadores de atributos de CategoríaRepositorioJDBCImpl (setter)
-    //Lectores de atributos de CategoríaRepositorioJDBCImpl (getter)
-
-        //Métodos de CategoríaRepositorioJDBCImpl
+    //Asignadores de atributos de CategoriaRepositorioJDBCImpl (setters)
+    //Lectores de atributos de CategoriaRepositorioJDBCImpl (getters)
+        //Métodos de CategoriaRepositorioJDBCImpl
     private static Categoria crearCategoria(ResultSet rs) throws SQLException {
             //Poblar el objeto de tipo categoría
         Categoria c = new Categoria();
@@ -53,11 +55,11 @@ public class CategoriaRepositorioJDBCImpl implements Repositorio<Categoria>{
     }
 
     @Override
-    public Categoria PorID(Long ID) throws SQLException {
+    public Categoria PorID(Long id) throws SQLException {
         Categoria C = null;
             //Obtener la conexión
         try (PreparedStatement PS = Conn.prepareStatement("SELECT * FROM categorias as c WHERE c.id = ?")) {
-            PS.setLong(1, ID);
+            PS.setLong(1, id);
                 //Realizar la consulta
             try (ResultSet RS = PS.executeQuery()) {
                 if (RS.next()) {
@@ -89,13 +91,8 @@ public class CategoriaRepositorioJDBCImpl implements Repositorio<Categoria>{
         }
     }
 
-
     @Override
-    public void Eliminar(Long ID) throws SQLException {
-        String SQL = "DELETE c.* FROM categorias as c WHERE c.id = ?";
-        try(PreparedStatement PS = Conn.prepareStatement(SQL)){
-            PS.setLong(1, ID);
-            PS.executeUpdate();
-        }
+    public void Eliminar(Long id) throws SQLException {
+
     }
 }

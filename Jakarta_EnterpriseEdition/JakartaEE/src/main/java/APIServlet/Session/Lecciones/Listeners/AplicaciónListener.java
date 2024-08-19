@@ -8,16 +8,17 @@ import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
 
 @WebListener    //No es obligatorio que lleve una anotación, pero se puede, por buena práctica
-public class AplicaciónListener implements ServletContextListener ,
-        ServletRequestListener , HttpSessionListener {
+public class AplicaciónListener implements ServletContextListener,
+        ServletRequestListener, HttpSessionListener {
         //Atributos de AplicaciónListener
     private ServletContext servletContext;
+
     //Constructores de AplicaciónListener
-    //Asignadores de atributos de AplicaciónListener (setter)
-    //Lectores de atributos de AplicaciónListener (getter)
+    //Asignadores de atributos de AplicaciónListener (setters)
+    //Lectores de atributos de AplicaciónListener (getters)
         //Métodos de AplicaciónListener
             //Métodos de ServletContextListener
-            //Tienen el alcance de todo el contexto (aplicación), no sólo del request, o la sesión
+                //Tienen el alcance de todo el contexto (aplicación), no sólo del request, o la sesión
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().log("Iniciando la aplicación");
@@ -27,11 +28,11 @@ public class AplicaciónListener implements ServletContextListener ,
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        this.servletContext.log("Destruyendo la aplicación");
+        sce.getServletContext().log("Destruyendo la aplicación");
     }
 
-        //Métodos de ServletRequestListener
-            //Sólo tienen el alcance del request, no son globales
+            //Métodos de ServletRequestListener
+                //Sólo tienen el alcance del request, no son globales
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
         this.servletContext.log("Iniciando el request");
@@ -47,12 +48,11 @@ public class AplicaciónListener implements ServletContextListener ,
         this.servletContext.log("Destruyendo el request");
     }
 
-        //Métodos de HttpSessionListener
+            //Métodos de HttpSessionListener
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         this.servletContext.log("Iniciando la sesión HTTP");
             //Se puede hacer algo aquí en cuanto se inicia sesión, como crear el carrito
-
         /*Carrito Carro = new Carrito();*/      //Creando el carrito
         /*HttpSession Sesión = se.getSession();*/ //Obteniendo la sesión                //En CDI, se puede manejar todo esto de forma programática
         /*Sesión.setAttribute("carrito", Carro);*/  //Asignar un atributo carrito a la sesión
@@ -65,6 +65,6 @@ public class AplicaciónListener implements ServletContextListener ,
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         this.servletContext.log("Destruyendo la sesión HTTP");
-            //Se puede hacer algo aquí en cuanto se cierra sesión
+        //Se puede hacer algo aquí en cuanto se cierra sesión
     }
 }

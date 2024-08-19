@@ -1,16 +1,23 @@
 package APIServlet.Session.Lecciones.Controllers;
 
 import APIServlet.Session.Lecciones.Configs.Calificadores.ProductoServicePrincipal;
-import APIServlet.Session.Lecciones.Models.*;
-import APIServlet.Session.Lecciones.Service.*;
+import APIServlet.Session.Lecciones.Models.Carrito;
+import APIServlet.Session.Lecciones.Models.ItemCarrito;
+import APIServlet.Session.Lecciones.Models.Producto;
+import APIServlet.Session.Lecciones.Service.ProductoService;
+import APIServlet.Session.Lecciones.Service.ProductoServiceImpl;
+import APIServlet.Session.Lecciones.Service.ProductoServiceJDBCImpl;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
@@ -21,28 +28,35 @@ public class ModificarCarritoServlet extends HttpServlet {
         //Atributos de ModificarCarritoServlet
     @Inject
     private Carrito Carro;
-    @Inject /*@Named("defecto")*/
+    @Inject/*@Named("defecto")*/
     @ProductoServicePrincipal
-    private ProductoService Service;
+    ProductoService Service;
 
     //Constructores de ModificarCarritoServlet
-    //Asignadores de atributos de ModificarCarritoServlet (setter)
-    //Lectores de atributos de ModificarCarritoServlet (getter)
+    //Asignadores de atributos de ModificarCarritoServlet (setters)
+    //Lectores de atributos de ModificarCarritoServlet (getters)
         //Métodos de ModificarCarritoServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             //Obtener la conexión
         /*Connection Conn = (Connection)req.getAttribute("conn");*/
+        /*ProductoService Service = new ProductoServiceImpl();*/
         /*ProductoService Service = new ProductoServiceJDBCImpl(Conn);*/
 
-        Long ID = Long.parseLong(req.getParameter("id"));    //Se obtiene el ID del producto seleccionado
+        Long ID = Long.parseLong(req.getParameter("id"));
         Optional<Producto> Productou = this.Service.PorID(ID);
 
-        if (Productou.isPresent()){
+        if (Productou.isPresent()) {
             ItemCarrito Item = new ItemCarrito(Productou.get(), 1); //Escrito así, siempre va a estar presente
-            /*HttpSession Sesión = req.getSession();*/
-                //Usando Listeners, podemos iniciar el carrito en los atributos de la sesión
-            /*Carrito Carro = (Carrito)Sesión.getAttribute("carrito");*/
+                /*HttpSession Sesión = req.getSession();*/
+                /*Carrito Carro;*/
+            /*if(Sesión.getAttribute("carrito") == null){*/
+                /*Carro = new Carrito();*/
+                    //Usando Listeners, se puede iniciar un carrito en los atributos de la sesión
+                /*Sesión.setAttribute("carrito", Carro);*/
+            /*} else {*/
+                /*Carro = (Carrito) Sesión.getAttribute("carrito");*/
+            /*}*/
             this.Carro.addItemCarrito(Item);
         }
         resp.sendRedirect(req.getContextPath() + "/carrito/ver");
@@ -50,8 +64,8 @@ public class ModificarCarritoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*HttpSession Sesión = req.getSession();*/
-        /*if(Sesión.getAttribute("carrito") != null){*/
+            /*HttpSession Sesión = req.getSession();*/
+        /*if(Sesión.getAttribute("carrito") != null){*/ //Dado que el carrito fue creado como atributo de la sesión en el listener, es redundante este if
             /*Carrito Carro = (Carrito)Sesión.getAttribute("carrito");*/
             this.ActualizarItems(req, this.Carro);
             this.ActualizarCantidades(req, this.Carro);
@@ -61,7 +75,7 @@ public class ModificarCarritoServlet extends HttpServlet {
 
     private void ActualizarItems(HttpServletRequest req, Carrito carro) {
             //Actualizar un producto es borrar los seleccionados
-            //Se obtienen los valores de todos los elementos cuya selección fue eliminar artículo
+                //Se obtienen los valores de todos los elementos cuya selección fue eliminar artículo
         String[] Eliminandos = req.getParameterValues("Eliminar");  //Se obtienen como valor, el ID del producto que se desea eliminar
             //Recorrer el arreglo de eliminandos
         if(Eliminandos != null && Eliminandos.length > 0){
@@ -71,7 +85,7 @@ public class ModificarCarritoServlet extends HttpServlet {
     }
 
     private void ActualizarCantidades(HttpServletRequest req, Carrito carro) {
-        Enumeration<String> NombresParámetros = req.getParameterNames();        //Se obtienen indistintamente todos los nombres de los parámetros del formulario
+        Enumeration<String> NombresParámetros = req.getParameterNames();    //Se obtienen indistintamente todos los nombres de los parámetros del formulario
             //Filtrar los que nos interesan, es decir, los que indican cantidades
         while (NombresParámetros.hasMoreElements()){
             String NombreParámetro = NombresParámetros.nextElement();
@@ -83,10 +97,11 @@ public class ModificarCarritoServlet extends HttpServlet {
                 if (Cantidad != null){
                     carro.ActualizarCantidad(ID, Integer.parseInt(Cantidad));   //Actualiza la cantidad del ÍtemCarrito
                 }
-                if (Integer.parseInt(Cantidad) == 0){
+                if (Integer.parseInt(Cantidad) <= 0){
                     carro.removeItemCarrito(ID);
                 }
             }
         }
     }
 }
+

@@ -2,11 +2,10 @@ package APIServlet.Session.Lecciones.Interceptores;
 
 import jakarta.interceptor.InterceptorBinding;
 
+import static java.lang.annotation.ElementType.*;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import static java.lang.annotation.ElementType.*;
 
 @InterceptorBinding //Va a enlazarse a una clase o método que usa componentes CDI para controlar su ejecución
 @Retention(RetentionPolicy.RUNTIME)
@@ -14,7 +13,7 @@ import static java.lang.annotation.ElementType.*;
 public @interface TransaccionalJDBC {
     //Atributos de TransaccionalJDBC
     //Constructores de TransaccionalJDBC
-    //Asignadores de atributos de TransaccionalJDBC (setter)
-    //Lectores de atributos de TransaccionalJDBC (getter)
+    //Asignadores de atributos de TransaccionalJDBC (setters)
+    //Lectores de atributos de TransaccionalJDBC (getters)
     //Métodos de TransaccionalJDBC
 }

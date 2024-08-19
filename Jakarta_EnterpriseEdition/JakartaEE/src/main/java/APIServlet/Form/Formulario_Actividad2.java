@@ -33,17 +33,17 @@ public class Formulario_Actividad2 extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
 
-        String nombre = req.getParameter("nombre"); //El argumento va con el nombre del index.jsp
+        String nombre = req.getParameter("nombre"); //El argumento va con el nombre del index.html
         Integer precio = null;
         try {
-            precio = Integer.valueOf(req.getParameter("precio")); //El argumento va con el nombre del index.jsp
+            precio = Integer.valueOf(req.getParameter("precio")); //El argumento va con el nombre del index.html
         } catch(NumberFormatException e){
 
         }
-        String fabricante = req.getParameter("fabricante"); //El argumento va con el nombre del index.jsp
+        String fabricante = req.getParameter("fabricante"); //El argumento va con el nombre del index.html
         Integer categoría = null;
         try {
-            categoría = Integer.valueOf(req.getParameter("categoría")); //El argumento va con el nombre del index.jsp
+            categoría = Integer.valueOf(req.getParameter("categoría")); //El argumento va con el nombre del index.html
         } catch(NumberFormatException e){
 
         }
@@ -94,11 +94,11 @@ public class Formulario_Actividad2 extends HttpServlet {
                 /*Errores.forEach(err -> {
                     out.println("<li>" + err + "</li>");
                 });
-                out.println("<p><a href = \"/JakartaEE/index.jsp\">Volver</a></p>");*/
+                out.println("<p><a href = \"/JakartaEE/index.html\">Volver</a></p>");*/
 
             req.setAttribute("errores", Errores);
-            getServletContext().getRequestDispatcher("/index.jsp") //Recordar siempre asociar a la ruta indicada, y cambiarlo por el index.jsp
-                    .forward(req, resp);                                //Renombrando al index.jsp en index.jsp, pasa a soportar código Java
+            getServletContext().getRequestDispatcher("/index.html") //Recordar siempre asociar a la ruta indicada, y cambiarlo por el index.html
+                    .forward(req, resp);                                //Renombrando al index.html en index.html, pasa a soportar código Java
         }
     }
 }

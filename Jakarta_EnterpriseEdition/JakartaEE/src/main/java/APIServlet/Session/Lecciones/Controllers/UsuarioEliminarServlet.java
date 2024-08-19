@@ -19,11 +19,11 @@ public class UsuarioEliminarServlet extends HttpServlet {
         //Atributos de UsuarioEliminarServlet
     @Inject
     private UsuarioService Service;
-
     //Constructores de UsuarioEliminarServlet
-    //Asignadores de atributos de UsuarioEliminarServlet (setter)
-    //Lectores de atributos de UsuarioEliminarServlet (getter)
+    //Asignadores de atributos de UsuarioEliminarServlet (setters)
+    //Lectores de atributos de UsuarioEliminarServlet (getters)
         //Métodos de UsuarioEliminarServlet
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             //Obtener la conexión

@@ -1,14 +1,14 @@
 package APIServlet.Session.Lecciones.Repositorios;
 
-import APIServlet.Session.Lecciones.Configs.Calificadores.MisLogs;
 import APIServlet.Session.Lecciones.Configs.Calificadores.MySQLConn;
 import APIServlet.Session.Lecciones.Configs.Estereotipos.Repository;
 import APIServlet.Session.Lecciones.Models.Categoria;
 import APIServlet.Session.Lecciones.Models.Producto;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,25 +16,24 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /*@ApplicationScoped*/  //Lo que es único por cada request es una conexión
-@Repository //El @PostConstruct y el @PreDestroy son importantes para saber cuándo ver esto en los logs
+@Repository
 public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
         //Atributos de ProductoRepositorioJDBCImpl
     @Inject
-    @MySQLConn /*@Named("conn")*/   //Uso de calificadores
+    @MySQLConn/*@Named("conn")*/
     private Connection Conn;    //Esta conexión implementa el pool de conexiones
                                 //No es necesario manejar el constructor con una conexión, pues el contenedor gestiona la instancia
                                 // de la conexión
     @Inject //Usar un modificador transient únicamente en los objetos de contexto SessionScoped o ConversationScoped que implementen la interfaz serializable
-    @MisLogs/*@Named("misLogs")*/
     private Logger Log; //Un objeto Logger no se guarda en la sesión (no es serializable)
 
         //Constructores de ProductoRepositorioJDBCImpl
     public ProductoRepositorioJDBCImpl() {
     }
     /*public ProductoRepositorioJDBCImpl(Connection conn) {
-        this.Conn = conn;
-    }*/       //Como el contenedor contiene la instancia de la conexión, este método
-              // se vuelve redundante, y puede generar conflictos
+        this.Conn = conn;   //Como el contenedor contiene la instancia de la conexión, este método
+                            // se vuelve redundante, y puede generar conflictos
+    }   */
     @PostConstruct
     public void Iniciar(){
         /*System.out.println("Creando un repositorio de " + this.getClass().getSimpleName() + " conectado a la base de datos");*/
@@ -46,28 +45,22 @@ public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
         this.Log.info("Destruyendo el repositorio de " + this.getClass().getSimpleName() + " conectado a la base de datos");
     }
 
-        //Asignadores de atributos de ProductoRepositorioJDBCImpl (setter)
-    public void setConn(Connection conn) {
-        this.Conn = conn;
-    }
-
-        //Lectores de atributos de ProductoRepositorioJDBCImpl (getter)
-    public Connection getConn() {
-        return this.Conn;
-    }
-
-    //Métodos de ProductoRepositorioJDBCImpl
+    //Asignadores de atributos de ProductoRepositorioJDBCImpl (setters)
+    //Lectores de atributos de ProductoRepositorioJDBCImpl (getters)
+        //Métodos de ProductoRepositorioJDBCImpl
     private static Producto CrearProducto(ResultSet rs) throws SQLException {
-        //Crear objeto de la clase Producto
+            //Crear objeto de la clase Producto
         Producto p = new Producto();
-        Categoria c = new Categoria();
             p.setID(rs.getLong("id"));
             p.setNombre(rs.getString("nombre"));
             p.setPrecio(rs.getInt("precio"));
             p.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
+
+        Categoria c = new Categoria();
             c.setID(rs.getLong("categoria_id"));
             c.setNombre(rs.getString("categoria"));
             p.setCategoria(c);
+
             p.setSKU(rs.getString("sku"));
         return p;
     }
@@ -76,7 +69,7 @@ public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
     public List<Producto> Listar() throws SQLException {
         List<Producto> Productos = new ArrayList<>();
             //Obtener la conexión a la base de datos
-        try (Statement Stmt = Conn.createStatement();
+        try (Statement Stmt = this.Conn.createStatement();
              ResultSet RS = Stmt.executeQuery("SELECT p.*, c.nombre as categoria FROM productos as p " +
                      "inner join categorias as c ON (p.categoria_id = c.id) order by p.id ASC")    //Hay que hacerlo, para evitar ambigüedades
         ){
@@ -89,15 +82,14 @@ public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
         }
         return Productos;
     }
-
     @Override
-    public Producto PorID(Long ID) throws SQLException {
+    public Producto PorID(Long id) throws SQLException {
         Producto Productinho = null;
             //Obtener la conexión a la base de datos
         try (PreparedStatement PS = this.Conn.prepareStatement("SELECT p.*, c.nombre as categoria FROM productos as p" +
                 " inner join categorias as c ON (p.categoria_id = c.id)" +
                 " WHERE p.id = ? ")) {
-            PS.setLong(1, ID);
+            PS.setLong(1, id);
                 //Recorrer el cursor
             try(ResultSet RS = PS.executeQuery()){
                 if(RS.next()){
@@ -118,7 +110,7 @@ public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
             SQL = "INSERT INTO productos (nombre, precio, sku, categoria_id, fecha_registro) VALUES (?, ?, ?, ?, ?)";
         }
             //Realizar la instrucción
-        try(PreparedStatement PS = Conn.prepareStatement(SQL)){
+        try(PreparedStatement PS = this.Conn.prepareStatement(SQL)){
             PS.setString(1, producto.getNombre());
             PS.setInt(2, producto.getPrecio());
             PS.setString(3, producto.getSKU());
@@ -132,10 +124,10 @@ public class ProductoRepositorioJDBCImpl implements Repositorio<Producto>{
         }
     }
     @Override
-    public void Eliminar(Long ID) throws SQLException {
+    public void Eliminar(Long id) throws SQLException {
         String SQL = "DELETE p.* FROM productos as p WHERE p.id = ?";
         try(PreparedStatement PS = Conn.prepareStatement(SQL)){
-            PS.setLong(1, ID);
+            PS.setLong(1, id);
             PS.executeUpdate();
         }
     }

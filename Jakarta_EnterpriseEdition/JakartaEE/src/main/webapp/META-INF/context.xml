@@ -1,5 +1,4 @@
 <Context>
-
     <!-- maxTotal: Maximum number of database connections in pool. Make sure you
          configure your mysqld max_connections large enough to handle
          all of your db connections. Set to -1 for no limit.
@@ -28,6 +27,6 @@
     <Resource name="jdbc/MySQLDB" auth="Container" type="javax.sql.DataSource"
               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
               username="root" password="sasa" driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/curso_java?serverTimezone=America/Bogota"
-    />
+              url="jdbc:mysql://localhost:3306/curso_java?serverTimezone=America/Bogota"/>
+
 </Context>

@@ -8,18 +8,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConexionBaseDatosDS {
-    //Atributos de ConexiónBaseDatos
-    //Constructores de ConexiónBaseDatos
-    //Asignadores de atributos de ConexiónBaseDatos (setter)
-    //Lectores de atributos de ConexiónBaseDatos (getter)
-        //Métodos de ConexiónBaseDatos
-    public static Connection getConnection() throws SQLException, NamingException { //Esto es para un pool de conexiones
-        Context initContext = null;
-        initContext = new InitialContext();
-        Context envContext = (Context) initContext.lookup("java:/comp/env");
-        DataSource ds = (DataSource) envContext.lookup("jdbc/MySQLDB");
-        /*Connection conn = ds.getConnection();*/       //Para ahorrar espacio en la memoria
+    //Atributos de ConexionBaseDatosDS
+    //Constructores de ConexionBaseDatosDS
+    //Asignadores de atributos de ConexionBaseDatosDS (setters)
+    //Lectores de atributos de ConexionBaseDatosDS (getters)
+        //Métodos de ConexionBaseDatosDS
+    public static Connection getConnection() throws SQLException, NamingException {
+        Context initContext = new InitialContext();
+        Context envContext  = (Context)initContext.lookup("java:/comp/env");
+        DataSource ds = (DataSource)envContext.lookup("jdbc/MySQLDB");
+        /*Connection conn = ds.getConnection();*/   //Para ahorrar espacio en la memoria
         return ds.getConnection();
-    }
-
+    };
 }

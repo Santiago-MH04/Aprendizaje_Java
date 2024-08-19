@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface ProductoService {
         //Métodos de ProductoService
     List<Producto> Listar();
-    List<Categoria> ListarCategoria();
+    List<Categoria> ListarCategorias();
     Optional<Producto> PorID(Long ID);
     Optional<Categoria> PorIDCategoria(Long ID);
     void Guardar(Producto producto);

@@ -17,11 +17,11 @@ import java.lang.annotation.Target;
 @Named
 @Stereotype //Sirve para agrupar a las anotaciones encima de la indicación de estereotipo
 @Retention(RetentionPolicy.RUNTIME)
-@Target(TYPE) //Así, podremos ingresar al log de Tomcat en cada clase cuándo se ejecute cada método que lleva esta anotación
+@Target(TYPE)   //Así, podremos ingresar al log de Tomcat en cada clase cuándo se ejecute cada método que lleva esta anotación
 public @interface Servicio {
     //Atributos de Servicio
     //Constructores de Servicio
-    //Asignadores de atributos de Servicio (setter)
-    //Lectores de atributos de Servicio (getter)
+    //Asignadores de atributos de Servicio (setters)
+    //Lectores de atributos de Servicio (getters)
     //Métodos de Servicio
 }

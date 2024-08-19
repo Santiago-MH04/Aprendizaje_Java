@@ -1,36 +1,36 @@
 package APIServlet.Session.Lecciones.Service;
 
-import APIServlet.Session.Lecciones.Configs.Calificadores.*;
-import APIServlet.Session.Lecciones.Configs.Estereotipos.*;
-import APIServlet.Session.Lecciones.Models.*;
-
-import APIServlet.Session.Lecciones.Repositorios.*;
-
+import APIServlet.Session.Lecciones.Configs.Estereotipos.Servicio;
+import APIServlet.Session.Lecciones.Models.Usuario;
+import APIServlet.Session.Lecciones.Repositorios.UsuarioRepositorio;
+import APIServlet.Session.Lecciones.Repositorios.UsuarioRepositorioJDBCImpl;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 /*@ApplicationScoped*/  //Lo que es único por cada request es una conexión
-@Servicio   //Ya va a ser transaccional
-public class UsuarioServiceJDBCImpl implements UsuarioService{
-        //Atributos de UsuarioServiceImpl
+@Servicio
+public class UsuarioServiceJDBCImpl implements UsuarioService {
+        //Atributos de UsuarioServiceJDBCImpl
+    @Inject
     private UsuarioRepositorio RepoUsuario;
 
-        //Constructores de UsuarioServiceImpl
+        //Constructores de UsuarioServiceJDBCImpl
     /*public UsuarioServiceJDBCImpl(Connection connection) {
         this.RepoUsuario = new UsuarioRepositorioJDBCImpl(connection);
     }*/
-    @Inject     //No hay que aclarar el nombre porque UsuarioRepositorioJDBCImpl es la única clase que implementa UsuarioRepositorio
+    @Inject //No hay que aclarar el nombre porque UsuarioRepositorioJDBCImpl es la única clase que implementa UsuarioRepositorio
     public UsuarioServiceJDBCImpl(UsuarioRepositorio usuarioRepositorio) {
         this.RepoUsuario = usuarioRepositorio;
     }
 
-    //Asignadores de atributos de UsuarioServiceImpl (setter)
-    //Lectores de atributos de UsuarioServiceImpl (getter)
-
-        //Métodos de UsuarioServiceImpl
+    //Asignadores de atributos de UsuarioServiceJDBCImpl (setters)
+    //Lectores de atributos de UsuarioServiceJDBCImpl (getters)
+        //Métodos de UsuarioServiceJDBCImpl
             //Métodos de Repositorio
     @Override
     public List<Usuario> ListarUsuarios() {
@@ -65,7 +65,7 @@ public class UsuarioServiceJDBCImpl implements UsuarioService{
         }
     }
 
-            //Métodos de UsuarioRepositorio
+        //Métodos de UsuarioRepositorio
     @Override
     public Optional<Usuario> Login(String nombreUsuario, String clave) {
         try {

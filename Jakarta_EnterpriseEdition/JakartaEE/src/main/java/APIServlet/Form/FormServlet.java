@@ -21,17 +21,17 @@ public class FormServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
 
-        String username = req.getParameter("username"); //El argumento va con el nombre del index.jsp
-        String password = req.getParameter("password"); //El argumento va con el nombre del index.jsp
-        String email = req.getParameter("email"); //El argumento va con el nombre del index.jsp
-        String país = req.getParameter("país"); //El argumento va con el nombre del index.jsp
-        String[] lenguajes = req.getParameterValues("lenguajes"); //El argumento va con el nombre del index.jsp
-        String[] roles = req.getParameterValues("roles"); //El argumento va con el nombre del index.jsp
+        String username = req.getParameter("username"); //El argumento va con el nombre del index.html
+        String password = req.getParameter("password"); //El argumento va con el nombre del index.html
+        String email = req.getParameter("email"); //El argumento va con el nombre del index.html
+        String país = req.getParameter("país"); //El argumento va con el nombre del index.html
+        String[] lenguajes = req.getParameterValues("lenguajes"); //El argumento va con el nombre del index.html
+        String[] roles = req.getParameterValues("roles"); //El argumento va con el nombre del index.html
 
         boolean habilitar = req.getParameter("habilitar") != null &&
-                req.getParameter("habilitar").equals("on"); //El argumento va con el nombre del index.jsp
-        String idioma = req.getParameter("idioma");       //El argumento va con el nombre del index.jsp
-        String secreto = req.getParameter("secreto");     //El argumento va con el nombre del index.jsp
+                req.getParameter("habilitar").equals("on"); //El argumento va con el nombre del index.html
+        String idioma = req.getParameter("idioma");       //El argumento va con el nombre del index.html
+        String secreto = req.getParameter("secreto");     //El argumento va con el nombre del index.html
 
         Map<String, String> Errores = new HashMap<>();      //Alt+J es el comando que he estado buscando toda mi vida
 
@@ -102,14 +102,14 @@ public class FormServlet extends HttpServlet {
                 /*Errores.forEach(err -> {
                     out.println("<li>" + err + "</li>");
                 });
-                out.println("<p><a href = \"/JakartaEE/index.jsp\">Volver</a></p>");*/
+                out.println("<p><a href = \"/JakartaEE/index.html\">Volver</a></p>");*/
 
             req.setAttribute("errores", Errores);
-            /*getServletContext().getRequestDispatcher("/index.jsp")
-                    .forward(req, resp);*/                                //Renombrando al index.jsp en index.jsp, pasa a soportar código Java
+            /*getServletContext().getRequestDispatcher("/index.html")
+                    .forward(req, resp);*/                                //Renombrando al index.html en index.html, pasa a soportar código Java
 
-            getServletContext().getRequestDispatcher("/index.jsp")
-                    .forward(req, resp);                                //Renombrando al index.jsp en index.jsp, pasa a soportar código Java
+            getServletContext().getRequestDispatcher("/index.html")
+                    .forward(req, resp);                                //Renombrando al index.html en index.html, pasa a soportar código Java
         }
     }
 }

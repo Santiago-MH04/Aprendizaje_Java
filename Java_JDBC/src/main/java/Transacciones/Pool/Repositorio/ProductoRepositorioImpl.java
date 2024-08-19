@@ -26,7 +26,7 @@ public class ProductoRepositorioImpl implements Repositorio<Producto> {
     //Lectores de atributos de ProductoRepositorioImpl (getter)
         //Métodos de ProductoRepositorioImpl
     private static Producto CrearProducto(ResultSet rs) throws SQLException {
-        //Crear el objeto de tipo Producto
+            //Crear el objeto de tipo Producto
         Producto P = new Producto();
             P.setID(rs.getLong("id"));
             P.setNombre(rs.getString("nombre"));
@@ -63,7 +63,7 @@ public class ProductoRepositorioImpl implements Repositorio<Producto> {
             //Definir el producto
         Producto Produit = null;
             //Obtener la conexión
-        try (PreparedStatement PS = this.Conn.prepareStatement("SELECT p.*, c.nombre as Categoria FROM productos as p " +
+        try (PreparedStatement PS = this.Conn.prepareStatement("SELECT p.*, c.nombre as categoria FROM productos as p " +
                 "inner join categorias as c ON (p.categoria_id = c.id) WHERE p.id = ?")){
             PS.setLong(1, ID);
                 //Ejecutar la consulta

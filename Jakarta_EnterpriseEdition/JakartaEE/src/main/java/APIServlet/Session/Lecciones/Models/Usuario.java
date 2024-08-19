@@ -11,7 +11,7 @@ public class Usuario {
     public Usuario() {
     }
 
-        //Asignadores de atributos de Usuario (setter)
+        //Asignadores de atributos de Usuario (setters)
     public void setID(Long ID) {
         this.ID = ID;
     }
@@ -25,7 +25,7 @@ public class Usuario {
                     this.Correo = correo;
                 }
 
-        //Lectores de atributos de Usuario (getter)
+        //Lectores de atributos de Usuario (getters)
     public Long getID() {
         return this.ID;
     }

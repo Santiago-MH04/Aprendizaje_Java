@@ -1,7 +1,7 @@
 package APIServlet.Cookie.Lecciones.Controllers;
 
 import APIServlet.Cookie.Lecciones.Service.*;
-import APIServlet.Headers.Models.Producto;
+import APIServlet.Cookie.Lecciones.Models.Producto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

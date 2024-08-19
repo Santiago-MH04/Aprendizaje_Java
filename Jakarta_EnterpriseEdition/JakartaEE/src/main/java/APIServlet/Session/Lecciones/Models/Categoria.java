@@ -1,12 +1,15 @@
 package APIServlet.Session.Lecciones.Models;
 
 public class Categoria {
-        //Atributos de Categoría
+        //Atributos de Categoria
     private Long ID;
     private String Nombre;
 
-    //Constructores de Categoría
-        //Asignadores de atributos de Categoría (setter)
+        //Constructores de Categoria
+    public Categoria() {
+    }
+
+        //Asignadores de atributos de Categoria (setters)
     public void setID(Long ID) {
         this.ID = ID;
     }
@@ -14,7 +17,7 @@ public class Categoria {
             this.Nombre = nombre;
         }
 
-        //Lectores de atributos de Categoría (getter)
+        //Lectores de atributos de Categoria (getters)
     public Long getID() {
         return this.ID;
     }
@@ -22,5 +25,5 @@ public class Categoria {
             return this.Nombre;
         }
 
-    //Métodos de Categoría
+    //Métodos de Categoria
 }

@@ -3,7 +3,6 @@ package APIServlet.Session.Lecciones.Interceptores;
 import jakarta.interceptor.InterceptorBinding;
 
 import static java.lang.annotation.ElementType.*;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -14,7 +13,7 @@ import java.lang.annotation.Target;
 public @interface Logging {
     //Atributos de Logging
     //Constructores de Logging
-    //Asignadores de atributos de Logging (setter)
-    //Lectores de atributos de Logging (getter)
+    //Asignadores de atributos de Logging (setters)
+    //Lectores de atributos de Logging (getters)
     //Métodos de Logging
 }

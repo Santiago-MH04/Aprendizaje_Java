@@ -30,7 +30,7 @@ public class EjemploJDBCTrxSingleton {
                 System.out.println(RepoProducto.PorID(2L));
 
                         //Actualizar producto
-                System.out.println(" ---- Actualizar producto ---- ");
+                /*System.out.println(" ---- Actualizar producto ---- ");
                 Producto Produit = new Producto();
                     Produit.setID(7L);
                     Produit.setNombre("Teclado IBM mecánico");
@@ -43,10 +43,10 @@ public class EjemploJDBCTrxSingleton {
                     Produit.setSKU("QuesoColo1");   //QuesoColo1 //abc1234
 
                 RepoProducto.Guardar(Produit);
-                System.out.println("Producto actualizado con éxito");
+                System.out.println("Producto actualizado con éxito");*/
 
                         //Crear producto
-                System.out.println(" ---- Crear producto ---- ");
+                /*System.out.println(" ---- Crear producto ---- ");
                 Producto P = new Producto();
                     P.setNombre("Samsung Galaxy S23 Ultra");
                     P.setPrecio(5700);
@@ -59,7 +59,7 @@ public class EjemploJDBCTrxSingleton {
                     P.setSKU("1234Pepito");
                 RepoProducto.Guardar(P);
                 System.out.println("Producto guardado con éxito");
-                RepoProducto.Listar().forEach(System.out::println); //Para reflejar los cambios
+                RepoProducto.Listar().forEach(System.out::println);*/ //Para reflejar los cambios
 
                 /*System.out.println(" ---- Eliminar producto ---- ");
                 RepoProducto.Eliminar(7L);

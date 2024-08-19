@@ -1,14 +1,15 @@
 package APIServlet.Session.Lecciones.Service;
 
+import APIServlet.Cookie.Lecciones.Service.LoginService;
 import jakarta.enterprise.inject.Alternative;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Arrays;
 import java.util.Optional;
+
 @Alternative
-public class LoginServiceImpl_Cookie implements LoginService {  //Así, el Service que se inyecta por defecto es el que no tenga esta anotación, es más simple así
-                                                                // No hay que anotarlo con ApplicationScoped, dado que el beans.xml registra todo
+public class LoginServiceImpl_Cookie implements LoginService {
     //Atributos de LoginService
     //Constructores de LoginService
     //Asignadores de atributos de LoginService (setter)

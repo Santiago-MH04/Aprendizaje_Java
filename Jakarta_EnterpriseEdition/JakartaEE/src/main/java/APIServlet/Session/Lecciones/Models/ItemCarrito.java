@@ -3,25 +3,25 @@ package APIServlet.Session.Lecciones.Models;
 import java.util.Objects;
 
 public class ItemCarrito {
-        //Atributos de ÍtemCarrito
+        //Atributos de ItemCarrito
     private Producto Producto;
     private int Cantidad;
 
-        //Constructores de ÍtemCarrito
+        //Constructores de ItemCarrito
     public ItemCarrito(Producto producto, int cantidad) {
         this.Producto = producto;
         this.Cantidad = cantidad;
     }
 
-        //Asignadores de atributos de ÍtemCarrito (setter)
-    public void setProducto(APIServlet.Session.Lecciones.Models.Producto producto) {
+        //Asignadores de atributos de ItemCarrito (setters)
+    public void setProducto(Producto producto) {
         this.Producto = producto;
     }
         public void setCantidad(int cantidad) {
             this.Cantidad = cantidad;
         }
 
-        //Lectores de atributos de ÍtemCarrito (getter)
+        //Lectores de atributos de ItemCarrito (getters)
     public Producto getProducto() {
         return this.Producto;
     }
@@ -29,7 +29,7 @@ public class ItemCarrito {
             return this.Cantidad;
         }
 
-        //Métodos de ÍtemCarrito
+        //Métodos de ItemCarrito
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,6 +1,7 @@
 package APIServlet.Session.Lecciones.Service;
 
 import APIServlet.Session.Lecciones.Models.Categoria;
+import APIServlet.Session.Lecciones.Service.ProductoService;
 import APIServlet.Session.Lecciones.Models.Producto;
 import jakarta.enterprise.inject.Alternative;
 
@@ -9,14 +10,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Collections.EMPTY_LIST;
-
 /*@Alternative*/    //Así, el Service que se inyecta por defecto es el que no tenga esta anotación, es más simple así
-                    //No hay que anotarlo con ApplicationScoped, dado que el beans.xml registra todo.
-                    //La anotación @Alternative se reemplaza con el calificador @ProductoServicePrincipal
+                //No hay que anotarlo con ApplicationScoped, dado que el beans.xml registra todo.
+                //La anotación @Alternative se reemplaza con el calificador @ProductoServicePrincipal
 public class ProductoServiceImpl implements ProductoService {
     //Atributos de ProductoServiceImpl
-    //Constructores de ProductoServiceImpl
+        //Constructores de ProductoServiceImpl
+
     //Asignadores de atributos de ProductoServiceImpl (setter)
     //Lectores de atributos de ProductoServiceImpl (getter)
         //Métodos de ProductoServiceImpl
@@ -28,8 +28,9 @@ public class ProductoServiceImpl implements ProductoService {
                 new Producto(3L, "Teclado mecánico", "Informática", 125000)
         );
     }
+
     @Override
-    public List<Categoria> ListarCategoria() {
+    public List<Categoria> ListarCategorias() {
         return Collections.EMPTY_LIST;  //Así nos evitamos cualquier problemo, y ya todo quedó solucionado, molto bello
     }
 
@@ -43,15 +44,17 @@ public class ProductoServiceImpl implements ProductoService {
                     return p.getNombre().toLowerCase().contains(NombreProducto.toLowerCase());
                 }).findFirst();
     }
+
     @Override
     public Optional<Producto> PorID(Long ID) {
         return this.Listar().stream()
                 .filter(p -> p.getID().equals(ID))
                 .findAny();
     }
+
     @Override
     public Optional<Categoria> PorIDCategoria(Long categoriaID) {
-        return this.ListarCategoria().stream()
+        return this.ListarCategorias().stream()
                 .filter(c -> c.getID().equals(categoriaID))
                 .findAny();
     }

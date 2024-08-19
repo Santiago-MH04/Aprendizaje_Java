@@ -1,6 +1,6 @@
 package APIServlet.Cookie.Lecciones.Service;
 
-import APIServlet.Headers.Models.Producto;
+import APIServlet.Cookie.Lecciones.Models.Producto;
 
 import java.util.List;
 import java.util.Optional;

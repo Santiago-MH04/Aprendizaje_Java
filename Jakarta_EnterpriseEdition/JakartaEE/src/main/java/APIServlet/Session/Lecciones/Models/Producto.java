@@ -14,12 +14,12 @@ public class Producto {
         //Constructores de Producto
     public Producto() {
     }
-    public Producto(Long ID, String nombre, String Tipo, int precio) {
+    public Producto(Long ID, String nombre, String tipo, int precio) {
         this.ID = ID;
         this.Nombre = nombre;
-        Categoria Cat = new Categoria();
-        Cat.setNombre(Tipo);
-        this.Categoría = Cat;
+        Categoria C = new Categoria();
+            C.setNombre(tipo);
+        this.Categoría = C;
         this.Precio = precio;
     }
 
@@ -36,12 +36,11 @@ public class Producto {
                 public void setPrecio(int precio) {
                     this.Precio = precio;
                 }
-                    public void setSKU(String SKU) {
-                        this.SKU = SKU;
-                    }
+                    public void setSKU(String SKU) {this.SKU = SKU;}
                         public void setFechaRegistro(LocalDate fechaRegistro) {
                             this.FechaRegistro = fechaRegistro;
                         }
+
 
         //Lectores de atributos de Producto (getter)
     public Long getID() {
@@ -57,8 +56,8 @@ public class Producto {
                     return this.Precio;
                 }
                     public String getSKU() {
-                        return this.SKU;
-                    }
+                    return this.SKU;
+                }
                         public LocalDate getFechaRegistro() {
                             return this.FechaRegistro;
                         }

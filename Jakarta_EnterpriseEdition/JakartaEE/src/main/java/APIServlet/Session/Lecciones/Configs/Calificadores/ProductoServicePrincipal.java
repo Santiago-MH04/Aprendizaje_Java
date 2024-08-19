@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 public @interface ProductoServicePrincipal {
     //Atributos de ProductoServicePrincipal
     //Constructores de ProductoServicePrincipal
-    //Asignadores de atributos de ProductoServicePrincipal (setter)
-    //Lectores de atributos de ProductoServicePrincipal (getter)
+    //Asignadores de atributos de ProductoServicePrincipal (setters)
+    //Lectores de atributos de ProductoServicePrincipal (getters)
     //Métodos de ProductoServicePrincipal
 }

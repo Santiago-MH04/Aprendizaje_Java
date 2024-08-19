@@ -22,6 +22,6 @@ public class CambiarColorServlet extends HttpServlet {
 
         Cookie ColorCookie = new Cookie("color", ColorTexto);
         resp.addCookie(ColorCookie);
-        resp.sendRedirect(req.getContextPath() + "/index.jsp");  //Para que el color cambie de una
+        resp.sendRedirect(req.getContextPath() + "/index.html");  //Para que el color cambie de una
     }
 }

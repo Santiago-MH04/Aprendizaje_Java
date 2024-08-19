@@ -18,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface Repository {
     //Atributos de Repository
     //Constructores de Repository
-    //Asignadores de atributos de Repository (setter)
-    //Lectores de atributos de Repository (getter)
+    //Asignadores de atributos de Repository (setters)
+    //Lectores de atributos de Repository (getters)
     //Métodos de Repository
 }

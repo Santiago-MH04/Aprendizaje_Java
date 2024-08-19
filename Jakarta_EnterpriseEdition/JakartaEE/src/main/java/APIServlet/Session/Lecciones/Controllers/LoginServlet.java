@@ -1,7 +1,11 @@
 package APIServlet.Session.Lecciones.Controllers;
 
 import APIServlet.Session.Lecciones.Models.Usuario;
-import APIServlet.Session.Lecciones.Service.*;
+import APIServlet.Session.Lecciones.Service.LoginService;
+import APIServlet.Session.Lecciones.Service.LoginServiceImpl_Session;
+
+import APIServlet.Session.Lecciones.Service.UsuarioService;
+import APIServlet.Session.Lecciones.Service.UsuarioServiceJDBCImpl;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,9 +22,9 @@ public class LoginServlet extends HttpServlet {
     /*final static String USERNAME = "Quesocolo";
     final static String PASSWORD = "Churus1529*";*/
     @Inject
-    private UsuarioService Service;
+    UsuarioService Service;
     @Inject
-    private LoginService SeAutoriza;
+    LoginService SeAutoriza;
 
     //Constructores de LoginServlet
     //Asignadores de atributos de LoginServlet (setter)
@@ -51,7 +55,7 @@ public class LoginServlet extends HttpServlet {
             }
         } else {
             req.setAttribute("titulum", req.getAttribute("titulum") + ": iniciar sesión");
-            getServletContext().getRequestDispatcher("/loginSession.jsp").forward(req, resp);    //Tener varias direcciones parece ser la solución
+            getServletContext().getRequestDispatcher("/loginSession.jsp").forward(req, resp);   //Tener varias direcciones parece ser la solución
         }
     }
 
@@ -60,18 +64,18 @@ public class LoginServlet extends HttpServlet {
         String NombreUsuario = req.getParameter("username");
         String Contraseña = req.getParameter("password");
 
-            /*if(USERNAME.equals(NombreUsuario) && PASSWORD.equals(Contraseña)){
-                HttpSession Sesión = req.getSession();
-                Sesión.setAttribute("username", NombreUsuario);
-                    //Para ahorrar código y no confundir al usuario
-                resp.sendRedirect(req.getContextPath() + "/login-session.html");
-            } else {
-                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Lo sentimos, no está autorizado a ingresar con las credenciales usadas");
-            }*/
+        /*if(USERNAME.equals(NombreUsuario) && PASSWORD.equals(Contraseña)){
+            HttpSession session = req.getSession();
+                session.setAttribute("username", NombreUsuario);
+
+                //Para ahorrar código y no confundir al usuario
+            resp.sendRedirect(req.getContextPath() + "/login-session.html");
+        } else {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Lo sentimos, no está autorizado a ingresar con las credenciales usadas");
+        }*/
 
         /*UsuarioService Service = new UsuarioServiceJDBCImpl((Connection)req.getAttribute("conn"));*/
         Optional<Usuario> UsuarioOptional = this.Service.Login(NombreUsuario, Contraseña);
-
         if (UsuarioOptional.isPresent()){
             HttpSession Sesión = req.getSession();
             Sesión.setAttribute("username", NombreUsuario);

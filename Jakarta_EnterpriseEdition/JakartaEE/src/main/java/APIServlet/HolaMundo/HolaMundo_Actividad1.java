@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@WebServlet("/actividad/indexCookie.html")
+@WebServlet("/actividad/index.html")
 public class HolaMundo_Actividad1 extends HttpServlet{
     //Atributos de HolaMundo_Actividad1
     //Constructores de HolaMundo_Actividad1

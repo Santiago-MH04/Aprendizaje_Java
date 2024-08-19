@@ -23,8 +23,8 @@ public class UsuarioFormServlet extends HttpServlet {
     private UsuarioService Service;
 
     //Constructores de UsuarioFormServlet
-    //Asignadores de atributos de UsuarioFormServlet (setter)
-    //Lectores de atributos de UsuarioFormServlet (getter)
+    //Asignadores de atributos de UsuarioFormServlet (setters)
+    //Lectores de atributos de UsuarioFormServlet (getters)
         //Métodos de UsuarioFormServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,14 +49,12 @@ public class UsuarioFormServlet extends HttpServlet {
             //Configurar los atributos
         req.setAttribute("usuario", Usuariou);
         req.setAttribute("titulum", req.getAttribute("titulum") + ": registro de usuarios");
-
             //Redirigir a la vista del formulario con los datos del usuario encontrado
         getServletContext().getRequestDispatcher("/form_usuarios.jsp").forward(req, resp);
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //Obtener la conexión
+            //Obtener la conexión
         /*Connection Conn = (Connection)req.getAttribute("conn")*/;
         /*UsuarioService Service = new UsuarioServiceJDBCImpl(Conn);*/
 
@@ -94,9 +92,10 @@ public class UsuarioFormServlet extends HttpServlet {
         }
         Usuarini.setNombreUsuario(NombreUsuario);
         Usuarini.setCorreo(Correo);
-
         if (Contraseña != null && !(Contraseña.isBlank())){
             Usuarini.setContraseña(Contraseña);
+        } else {
+            Usuarini.setContraseña(Usuarini.getContraseña());   //Puede ser redundante, pero verificar luego que esto soluciones mis problemas
         }
 
             //Ejecutar la modificación de la base de datos
@@ -114,4 +113,3 @@ public class UsuarioFormServlet extends HttpServlet {
         }
     }
 }
-
